@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minesweeper</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        #output {
+            font-family: Arial, sans-serif;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        #game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #new-game-button {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #new-game-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<div id="output">Loading Minesweeper...</div>
+<div id="game-container">
+    <canvas id="canvas" width="400" height="400" oncontextmenu="event.preventDefault()"></canvas>
+    <button id="new-game-button">New Game</button>
+</div>
+<script src="https://cdn.jsdelivr.net/pyodide/v0.27.6/full/pyodide.js"></script>
+<script type="text/javascript">
+    let pyodide;
+    let setupGame;
+
+    async function loadCodeToVFS(pyodide) {
+        try {
+            const response = await fetch('./code.zip');
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+            let zipBinary = await response.arrayBuffer();
+            pyodide.unpackArchive(zipBinary, "zip");
+
+            console.log("[JS] Code unpacked successfully");
+        } catch (error) {
+            console.error("[JS] Code to load assets:", error);
+            throw error;
+        }
+    }
+
+    async function main() {
+        pyodide = await loadPyodide();
+        const gameCanvas = document.getElementById('canvas');
+        pyodide.canvas.setCanvas2D(gameCanvas);
+
+        try {
+            await pyodide.loadPackage(["pygame-ce"], { checkIntegrity: false });
+            console.log("[JS] pygame-ce installed via pyodide.");
+        } catch (error) {
+            console.error("[JS] Pygame-ce installation error:", error);
+            document.getElementById("output").innerText = "Failed to load Minesweeper: " + error.message;
+            return;
+        }
+
+        await loadCodeToVFS(pyodide)
+
+        // Load and modify the Python code to expose setup function
+        // const response = await fetch("minesweeper.py");
+        // let pythonCode = await response.text();
+
+        try {
+            await pyodide.runPythonAsync("import minesweeper");
+            console.log("[JS] minesweeper.py imported successfully.");
+        } catch (error) {
+            console.error("[JS] Error importing minesweeper.py:", error);
+            document.getElementById("output").innerText = "Failed to initialize game module: " + error.message;
+            return; // Stop further execution if the core module fails
+        }
+        // Set up button event listener
+        document.getElementById("new-game-button").addEventListener("click", () => {
+            pyodide.runPython("minesweeper.new_game()");
+            console.log("[JS] New game started.");
+        });
+
+        document.getElementById("output").innerText = "";
+    }
+    main();
+</script>
+</body>
+</html>
