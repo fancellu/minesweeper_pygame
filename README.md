@@ -26,7 +26,7 @@ A classic Minesweeper game implemented in Python using Pygame-CE. This version i
 **Installation & Setup:**
 1. Clone or download this repository
 ```bash
-git clone https://github.com/fancellu/minesweeper-pygame.git
+git clone https://github.com/fancellu/minesweeper_pygame.git
 cd minesweeper-pygame
 ```
 2. Install the required Python package:
@@ -35,12 +35,12 @@ pip install -r requirements.txt
 ```
 3. Run the game on the desktop:
 ```bash
-python mineseeper.py
+python minesweeper.py
 ```
 
 **Web Version**
 
-1. Run build-code.zip-py to bundle the source and any assets into code.zip
+1. Run build-code-zip.py to bundle the source and any assets into code.zip
 2. Host the code.zip and index.html on a web server or use a local development server
 3. Open index.html in a modern web browser
 
