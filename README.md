@@ -15,6 +15,10 @@ A classic Minesweeper game implemented in Python using Pygame-CE. This version i
     * **Browser/Touch:** Click/Tap to reveal, Long-press to flag.
 * **New Game Button:** Easily start a new game at any time.
 
+## Tutorial
+
+[Tutorial](tutorial/index.md)
+
 ## How to Run
 
 ### 1. Desktop Version
