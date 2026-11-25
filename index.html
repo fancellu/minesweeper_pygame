@@ -16,7 +16,7 @@
         }
         #output {
             font-family: Arial, sans-serif;
-            color: #333;
+            color: #ddd;
             margin-bottom: 10px;
         }
         #game-container {
@@ -29,14 +29,14 @@
             padding: 10px 20px;
             font-size: 16px;
             font-family: Arial, sans-serif;
-            background-color: #4CAF50;
+            background-color: #2E7D32;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
         }
         #new-game-button:hover {
-            background-color: #45a049;
+            background-color: #1B5E20;
         }
     </style>
 </head>
@@ -46,7 +46,7 @@
     <canvas id="canvas" width="400" height="400" oncontextmenu="event.preventDefault()"></canvas>
     <button id="new-game-button">New Game</button>
 </div>
-<script src="https://cdn.jsdelivr.net/pyodide/v0.27.6/full/pyodide.js"></script>
+<script src="https://cdn.jsdelivr.net/pyodide/v314.0.8/full/pyodide.js"></script>
 <script type="text/javascript">
     let pyodide;
     let setupGame;
@@ -61,7 +61,7 @@
 
             console.log("[JS] Code unpacked successfully");
         } catch (error) {
-            console.error("[JS] Code to load assets:", error);
+            console.error("[JS] Failed to load assets:", error);
             throw error;
         }
     }
@@ -72,7 +72,7 @@
         pyodide.canvas.setCanvas2D(gameCanvas);
 
         try {
-            await pyodide.loadPackage(["pygame-ce"], { checkIntegrity: false });
+            await pyodide.loadPackage(["pygame-ce"]);
             console.log("[JS] pygame-ce installed via pyodide.");
         } catch (error) {
             console.error("[JS] Pygame-ce installation error:", error);
@@ -80,11 +80,12 @@
             return;
         }
 
-        await loadCodeToVFS(pyodide)
-
-        // Load and modify the Python code to expose setup function
-        // const response = await fetch("minesweeper.py");
-        // let pythonCode = await response.text();
+        try {
+            await loadCodeToVFS(pyodide);
+        } catch (error) {
+            document.getElementById("output").innerText = "Failed to load game files: " + error.message;
+            return;
+        }
 
         try {
             await pyodide.runPythonAsync("import minesweeper");

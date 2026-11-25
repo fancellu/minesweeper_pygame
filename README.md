@@ -2,6 +2,12 @@
 
 A classic Minesweeper game implemented in Python using Pygame-CE. This version is designed to run both as a standard desktop application and in a web browser using Pyodide (WebAssembly).
 
+## Screenshots
+
+| Playing | Game over | Won |
+|:---:|:---:|:---:|
+| ![Game in progress with numbers and flags](screenshots/playing.png) | ![Game over with mines revealed](screenshots/game_over.png) | ![Winning board](screenshots/won.png) |
+
 ## Features
 
 * **Classic Minesweeper Gameplay:** Uncover cells, avoid mines, and use flags to mark suspected mine locations.
@@ -31,7 +37,7 @@ A classic Minesweeper game implemented in Python using Pygame-CE. This version i
 1. Clone or download this repository
 ```bash
 git clone https://github.com/fancellu/minesweeper_pygame.git
-cd minesweeper-pygame
+cd minesweeper_pygame
 ```
 2. Install the required Python package:
 ```bash
