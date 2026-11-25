@@ -1,0 +1,7 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "",
+  "buildCommand": "python3 build-code-zip.py && mkdir -p dist && cp index.html code.zip dist/",
+  "outputDirectory": "dist"
+}

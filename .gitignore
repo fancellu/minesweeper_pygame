@@ -1,4 +1,6 @@
 /venv/
 *.zip
-.idea/
+.idea
 __pycache__/
+.vscodedist/
+.vercel/
