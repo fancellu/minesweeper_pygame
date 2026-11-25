@@ -2,6 +2,8 @@
 
 A classic Minesweeper game implemented in Python using Pygame-CE. This version is designed to run both as a standard desktop application and in a web browser using Pyodide (WebAssembly).
 
+**[Play it in your browser](https://minesweeper-pygame.vercel.app/)**
+
 ## Screenshots
 
 | Playing | Game over | Won |
@@ -56,7 +58,7 @@ python minesweeper.py
 
 ## To run on web via wasm
 
-[Click here to Preview](https://acid.seedhost.eu/seedbod/minesweeperpygame/)
+[Click here to Play](https://minesweeper-pygame.vercel.app/)
 
 The game will automatically load and initialize using Pyodide
 
